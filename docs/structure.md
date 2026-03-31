@@ -53,7 +53,7 @@ Código principal del proyecto, organizado por etapas del pipeline.
   Genera datos sintéticos de ventas (10 años) simulando estacionalidad y comportamiento de negocio.
 
   *`weather_api.py`
-  Integración de api de tiempo, comportamiento de ventas según clima.
+  Integración de api del tiempo, comportamiento de ventas según clima.
 
 ---
 
@@ -66,6 +66,9 @@ Código principal del proyecto, organizado por etapas del pipeline.
   * Corrección de tipos
   * Eliminación de outliers / errores
   * Generación de dataset limpio
+
+* `feature_engineering.py`
+  Integración de datos externos y generación de variables derivadas para análisis de comportamiento de ventas
 
 ---
 

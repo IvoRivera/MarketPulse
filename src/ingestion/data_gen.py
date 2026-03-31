@@ -1,17 +1,29 @@
 import pandas as pd
 import numpy as np
 import os
+from pathlib import Path
 from datetime import datetime
 
-def generate_bakery_data():
-    """ Genera un dataset de 10 años con 25+ productos y lógica estacional avanzada """
-    np.random.seed(42)
-    
-    # 1. Definición del Rango Temporal
-    start_date = '2016-01-01'
-    # Ajustado al tiempo actual: 2026-02-24
-    end_date = datetime.now().strftime('%Y-%m-%d')
-    date_range = pd.date_range(start=start_date, end=end_date, freq='D')
+# =========================
+# CONFIGURACIÓN 
+# ========================= 
+
+# 1. Cofiguración temporal inicial y salida
+
+OUTPUT_PATH = Path("data/raw/raw_market_data.csv") 
+START_DATE = "2016-01-01" 
+END_DATE = datetime.now().strftime("%Y-%m-%d") 
+DATE_RANGE = pd.date_range(start=START_DATE, end=END_DATE, freq='D')
+
+np.random.seed(42)
+
+
+def get_product_catalog():
+
+# ========================= 
+# CATÁLOGO DE PRODUCTOS
+# =========================
+    """ Definicion de un catalogo para generar un dataset de 10 años con 25+ productos y lógica estacional avanzada """
     
     # 2. Catálogo Extendido (25 productos en 5 categorías)
     # Incluimos 'cost_factor' para posterior análisis de margen de contribución
@@ -51,83 +63,124 @@ def generate_bakery_data():
         {'id': 504, 'cat': 'Rotisería', 'name': 'Torta Selva Negra', 'base_price': 15000, 'daily_vol': 3, 'cost_f': 0.4},
         {'id': 505, 'cat': 'Rotisería', 'name': 'Sopaipillas (bolsa)', 'base_price': 2500, 'daily_vol': 10, 'cost_f': 0.3}
     ]
-    
-    data_rows = []
-    
-    for current_date in date_range:
-        # Inflación Chilena: Ajuste anual acumulado (~5-7% promedio)
-        years_passed = (current_date - date_range[0]).days / 365.25
-        # Fórmula: $$ P_{final} = P_{base} \times (1 + r)^{t} $$
-        inflation_factor = (1.06)**years_passed 
-        
-        for prod in products:
-            vol_multiplier = 1.0
-            
-            # --- LÓGICA ESTACIONAL REALISTA ---
-            # 1. Fiestas Patrias (Empanadas Sept 15-19)
-            if current_date.month == 9 and 15 <= current_date.day <= 19:
-                if prod['cat'] == 'Empanadas': vol_multiplier = 8.5
-            
-            # 2. Navidad y Fin de Año (Pan de Pascua y Tortas)
-            if current_date.month == 12:
-                if prod['id'] == 501: vol_multiplier = 50.0 # Pan de pascua aparece
-                if prod['id'] == 504: vol_multiplier = 4.0  # Más tortas
-            
-            # 3. Invierno (Sopaipillas y Café en Junio-Agosto)
-            if current_date.month in [6, 7, 8]:
-                if prod['id'] == 505: vol_multiplier = 3.0
-                if prod['cat'] == 'Cafetería': vol_multiplier = 1.5
 
-            # 4. Fines de Semana (Pastelería y Tortas)
-            if current_date.weekday() >= 5:
-                if prod['cat'] == 'Pastelería': vol_multiplier = 2.5
-                if prod['id'] == 504: vol_multiplier = 3.0
+# =========================
+# LÓGICA DE NEGOCIO
+# =========================
+def get_seasonal_multiplier(date, product):
+    """
+    Define reglas de negocio para estacionalidad.
+    """
+    multiplier = 1.0
 
-            # Simulación de volumen (Poisson para evitar ventas negativas)
-            units = np.random.poisson(prod['daily_vol'] * vol_multiplier)
-            
+    # Fiestas Patrias
+    if date.month == 9 and 15 <= date.day <= 19:
+        if product['cat'] == 'Empanadas':
+            multiplier = 8.5
+
+    # Navidad
+    if date.month == 12:
+        if product['id'] == 501:
+            multiplier = 50.0
+        if product['id'] == 504:
+            multiplier = 4.0
+
+    # Invierno
+    if date.month in [6, 7, 8]:
+        if product['id'] == 505:
+            multiplier = 3.0
+        if product['cat'] == 'Cafetería':
+            multiplier = 1.5
+
+    # Fin de semana
+    if date.weekday() >= 5:
+        if product['cat'] == 'Pastelería':
+            multiplier = 2.5
+        if product['id'] == 504:
+            multiplier = 3.0
+
+    return multiplier
+
+
+# =========================
+# GENERACIÓN PRINCIPAL
+# =========================
+def generate_data():
+    print("🏭 Generando datos sintéticos...")
+
+    products = get_product_catalog()
+    dates = pd.date_range(start=START_DATE, end=END_DATE, freq='D')
+
+    rows = []
+
+    for current_date in dates:
+        years_passed = (current_date - dates[0]).days / 365.25
+        inflation_factor = (1.06) ** years_passed
+
+        for product in products:
+            multiplier = get_seasonal_multiplier(current_date, product)
+
+            units = np.random.poisson(product['daily_vol'] * multiplier)
+
             if units > 0:
-                price_clean = prod['base_price'] * inflation_factor
-                # Ruido de mercado de ±2%
-                price_with_noise = price_clean + np.random.normal(0, price_clean * 0.02)
+                base_price = product['base_price'] * inflation_factor
+                noisy_price = base_price + np.random.normal(0, base_price * 0.02)
 
-                # --- NUEVA LÓGICA DE TIEMPO (H:M:S) ---
-                # Generamos un offset aleatorio en segundos entre las 07:00:00 y las 21:00:00
-                # 7 AM = 25,200 segundos | 9 PM = 75,600 segundos
                 seconds_offset = np.random.randint(25200, 75600)
-                sale_datetime = current_date + pd.to_timedelta(seconds_offset, unit='s')
-                
-                data_rows.append({
-                    'date': sale_datetime,
-                    'product_id': prod['id'],
-                    'product_name': prod['name'],
-                    'category': prod['cat'],
-                    'raw_price': round(price_with_noise, 0),
-                    'units_sold': units,
-                    'unit_cost': round(price_clean * prod['cost_f'], 0)
+                timestamp = current_date + pd.to_timedelta(seconds_offset, unit='s')
+
+                rows.append({
+                    "date": timestamp,
+                    "product_id": product['id'],
+                    "product_name": product['name'],
+                    "category": product['cat'],
+                    "raw_price": round(noisy_price, 0),
+                    "units_sold": units,
+                    "unit_cost": round(base_price * product['cost_f'], 0)
                 })
 
-    df = pd.DataFrame(data_rows)
-    
-    # 3. INYECCIÓN DE ANOMALÍAS (3% Errores de precio)
-    anomaly_idx = np.random.choice(df.index, size=int(len(df) * 0.03), replace=False)
-    df.loc[anomaly_idx, 'raw_price'] = df.loc[anomaly_idx, 'raw_price'] * np.random.choice([10, 0.1, 5])
-    
-    # 4. INYECCIÓN DE NULOS ( <1% en campos críticos)
-    # Fechas nulas (simula error de timestamp)
-    null_date_idx = np.random.choice(df.index, size=int(len(df) * 0.005), replace=False)
-    df.loc[null_date_idx, 'date'] = np.nan
-    
-    # IDs de producto nulos (simula error de escaneo/SKU)
-    null_id_idx = np.random.choice(df.index, size=int(len(df) * 0.007), replace=False)
-    df.loc[null_id_idx, 'product_id'] = np.nan
+    df = pd.DataFrame(rows)
+    print(f"Registros generados: {len(df)}")
 
-    # 4. Exportar
-    if not os.path.exists('data'): os.makedirs('data')
-    df.to_csv('data/raw_market_data.csv', index=False)
-    
-    print(f"Dataset 'MarketPulse' generado: {len(df)} registros.")
-    print(f"Ejemplo de error inyectado: {df.loc[anomaly_idx[0], 'product_name']} a ${df.loc[anomaly_idx[0], 'raw_price']:,}")
+    return df
+
+
+# =========================
+# ANOMALÍAS CONTROLADAS
+# =========================
+def inject_anomalies(df):
+    print("⚠️ Inyectando anomalías...")
+
+    # Precios erróneos
+    idx = np.random.choice(df.index, size=int(len(df) * 0.03), replace=False)
+    df.loc[idx, "raw_price"] *= np.random.choice([0.1, 5, 10])
+
+    # Nulos
+    df.loc[np.random.choice(df.index, size=int(len(df) * 0.005), replace=False), "date"] = np.nan
+    df.loc[np.random.choice(df.index, size=int(len(df) * 0.007), replace=False), "product_id"] = np.nan
+
+    return df
+
+
+# =========================
+# GUARDADO
+# =========================
+def save_data(df):
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(OUTPUT_PATH, index=False)
+    print(f"💾 Dataset guardado en {OUTPUT_PATH}")
+
+
+# =========================
+# PIPELINE
+# =========================
+def run_pipeline():
+    df = generate_data()
+    df = inject_anomalies(df)
+    save_data(df)
+    print("✅ Generación completada.")
+
 
 if __name__ == "__main__":
-    generate_bakery_data()
+    run_pipeline()
+

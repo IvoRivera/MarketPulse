@@ -35,6 +35,7 @@ def handle_missing_values(df: pd.DataFrame) -> pd.DataFrame:
 
     # Eliminamos registros sin información crítica
     df = df.dropna(subset=["date", "product_id"])
+    df = df.copy()
 
     # Imputaciones
     df["raw_price"] = df["raw_price"].fillna(df["raw_price"].median())
@@ -58,6 +59,7 @@ def add_time_features(df: pd.DataFrame) -> pd.DataFrame:
     df["year"] = df["date"].dt.year
     df["month"] = df["date"].dt.month
     df["day_of_week"] = df["date"].dt.day_name()
+    df["date_only"] = df["date"].dt.date
 
     return df
 
@@ -70,7 +72,9 @@ def diagnostic_outliers(df: pd.DataFrame, year_sample: int = 2025):
     Diagnóstico simple de outliers por producto.
     """
     print("\n🔍 Diagnóstico de outliers...")
-
+    if sample.empty:
+        print(f"No hay datos para el año {year_sample}")
+        return
     sample = df[df["year"] == year_sample]
 
     for prod_id in sample["product_id"].unique():

@@ -60,11 +60,27 @@ def save_weather(df: pd.DataFrame):
 # =========================
 # MAIN
 # =========================
-def run_weather_pipeline():
-    # Puedes ajustar fechas según tu dataset
-    df = fetch_weather("2016-01-01", "2026-02-25")
-    save_weather(df)
 
+def get_date_range_from_sales(path: Path):
+    """
+    Obtiene el rango de fechas desde el dataset de ventas.
+    """
+    df = pd.read_csv(path, parse_dates=["date"])
+
+    start_date = df["date"].min().date()
+    end_date = df["date"].max().date()
+
+    print(f"📅 Rango detectado: {start_date} → {end_date}")
+
+    return str(start_date), str(end_date)
+
+def run_weather_pipeline():
+    sales_path = Path("data/raw/raw_market_data.csv")
+
+    start_date, end_date = get_date_range_from_sales(sales_path)
+
+    df = fetch_weather(start_date, end_date)
+    save_weather(df)
 
 if __name__ == "__main__":
     run_weather_pipeline()
