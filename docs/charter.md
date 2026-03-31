@@ -1,22 +1,89 @@
-# Project Charter: MarketPulse MVP
+# Project Charter: MarketPulse
 
 ## 1. Visión del Proyecto
-Implementar un pipeline de Integridad de Datos y un sistema de Inteligencia de Precios que permita a una PyME del sector retail (Panadería) transicionar de una fijación de precios basada en la intuición a una estrategia basada en evidencia histórica y proyecciones de rentabilidad
+
+Construir un **pipeline de datos end-to-end** que permita a una panadería analizar su rendimiento histórico y entender los factores que impactan sus ventas, integrando datos internos con fuentes externas.
+
+El objetivo es simular un caso real donde el negocio pasa de decisiones intuitivas a decisiones basadas en datos.
+
+---
 
 ## 2. Problema de Negocio
-En el contexto de alta inflación en Chile (2016-2026), los comercios locales pierden margen de ganancia por dos factores críticos: la incapacidad de ajustar precios de forma proporcional al aumento de costos y la distorsión de KPIs financieros debido a errores humanos en el registro de ventas (outliers operativos).
 
-## 3. Objetivos (Scope Semanal)
-- **Ingeniería de Datos:** Ingeniería de Datos: Desarrollar un pipeline en Python que gestione un histórico de 10 años (~18,000+ registros), simulando ciclos económicos y estacionalidad cultural chilena.
-- **Aseguramiento de Calidad:** Automatizar la detección de anomalías mediante Winsorización, eliminando el impacto de errores de digitación en el cálculo de márgenes.
-- **Análisis de Valor:** Cuantificar la Elasticidad de Precio y el crecimiento YoY (Año a Año) para identificar los "motores de ingresos" del negocio.
+Las pequeñas empresas de retail no cuentan con sistemas robustos de datos, lo que genera:
 
-## 4. Tecnologías
-- **Python:** Generación de datos sintéticos con tendencia inflacionaria y limpieza estadística.
-- **Power BI:** Implementación de Time Intelligence para análisis de una década y parámetros What-if para simulación de escenarios.
-- **GitHub:** Gestión del ciclo de vida del proyecto y documentación técnica (README).
+* Datos inconsistentes (errores de registro, outliers)
+* Falta de visibilidad sobre tendencias de ventas
+* Decisiones basadas en intuición (ej: precios, stock, promociones)
+
+Esto impide responder preguntas clave como:
+
+* ¿Cuándo vendo más y por qué?
+* ¿Qué factores externos afectan mis ventas?
+* ¿Qué productos generan mayor valor?
+
+---
+
+## 3. Objetivos del Proyecto
+
+### 🧱 Ingeniería de Datos
+
+* Construir un pipeline en Python que:
+
+  * Genere y procese datos históricos (10 años)
+  * Limpie y valide datos automáticamente
+  * Estructure datos en formato analítico
+
+### 🔗 Integración de Datos
+
+* Enriquecer el dataset con variables externas como:
+
+  * Clima o feriados
+* Unificar datos en un modelo analítico
+
+### 📊 Análisis
+
+* Identificar:
+
+  * Tendencias de ventas
+  * Estacionalidad
+  * Impacto de variables externas
+
+### 📈 Visualización
+
+* Desarrollar un dashboard en Power BI que permita:
+
+  * Monitorear KPIs clave
+  * Explorar patrones de negocio
+  * Apoyar la toma de decisiones
+
+---
+
+## 4. Stack Tecnológico
+
+* **Python** → ETL (generación, limpieza, transformación)
+* **APIs externas** → enriquecimiento de datos
+* **AWS (S3)** → almacenamiento de datos
+* **Power BI** → visualización
+* **GitHub** → versionado y documentación
+
+---
 
 ## 5. Criterios de Éxito
-- Scripts que generen y limpien el dataset de 10 años en menos de un minuto.
-- Dashboard con tres pestañas funcionales (Vista Gerencial, Integridad de Datos y Simulador de Estrategia).
-- Un informe que detalle cómo la limpieza de datos reveló una "fuga de margen" o una oportunidad de precio no aprovechada durante las Fiestas Patrias.
+
+* Pipeline reproducible de datos (raw → processed)
+* Integración de al menos una fuente externa
+* Dataset limpio y validado
+* Dashboard funcional con insights claros
+* Proyecto documentado y entendible en GitHub
+
+---
+
+## 6. Resultado Esperado
+
+Un proyecto de portafolio que demuestre:
+
+* Manejo de datos end-to-end
+* Capacidad de integrar múltiples fuentes
+* Generación de insights de negocio
+* Uso de herramientas reales del stack de datos
