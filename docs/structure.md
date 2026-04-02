@@ -7,15 +7,19 @@ marketpulse/
 │
 ├── data/
 │   ├── raw/
-│   │   └── raw_market_data.csv
+│   │   ├── raw_market_data.csv
+│   │   └── weather_data.csv
 │   ├── processed/
+│   │   ├── clean_market_data.csv
+│   │   └── final_dataset.csv
 │
 ├── src/
 │   ├── ingestion/
-│   │   └── data_generator.py
-|   |   └── weater_api.py
+│   │   ├── data_generator.py
+│   │   └── weather_api.py
 │   ├── processing/
-│   │   └── data_cleaning.py
+│   │   ├── data_cleaning.py
+│   │   └── feature_engineering.py
 │   ├── analysis/
 │   │   └── eda.py
 │
@@ -38,8 +42,8 @@ marketpulse/
 
 Contiene los datasets del proyecto separados por estado del pipeline.
 
-* **raw/** → datos originales sin procesar
-* **processed/** → datos limpios listos para análisis
+* **raw/** → datos originales sin procesar (ventas + clima)
+* **processed/** → datos limpios y enriquecidos listos para análisis
 
 ---
 
@@ -50,25 +54,32 @@ Código principal del proyecto, organizado por etapas del pipeline.
 #### `/ingestion`
 
 * `data_generator.py`
-  Genera datos sintéticos de ventas (10 años) simulando estacionalidad y comportamiento de negocio.
+  Genera datos sintéticos de ventas con lógica de negocio:
 
-  *`weather_api.py`
-  Integración de api del tiempo, comportamiento de ventas según clima.
+  * estacionalidad
+  * inflación
+  * comportamiento por categoría
+
+* `weather_api.py`
+  Obtiene datos climáticos históricos y los adapta dinámicamente al rango del dataset de ventas.
 
 ---
 
 #### `/processing`
 
 * `data_cleaning.py`
-  Limpia y transforma los datos:
+  Pipeline de limpieza:
 
-  * Manejo de nulos
-  * Corrección de tipos
-  * Eliminación de outliers / errores
-  * Generación de dataset limpio
+  * manejo de nulos
+  * validación de datos
+  * detección y tratamiento de outliers
+  * generación de variables temporales
 
 * `feature_engineering.py`
-  Integración de datos externos y generación de variables derivadas para análisis de comportamiento de ventas
+  Enriquecimiento del dataset:
+
+  * integración ventas + clima
+  * generación de features (clima, revenue, categorías)
 
 ---
 
@@ -77,23 +88,22 @@ Código principal del proyecto, organizado por etapas del pipeline.
 * `eda.py`
   Análisis exploratorio:
 
-  * Tendencias
-  * Estacionalidad
-  * Patrones de ventas
-  * Generación de insights iniciales
+  * tendencias
+  * estacionalidad
+  * impacto de variables externas
 
 ---
 
 ### `/notebooks`
 
-Espacio para análisis exploratorio en Jupyter (EDA más visual y narrativo).
+Espacio para análisis exploratorio más narrativo (EDA).
 
 ---
 
 ### `/dashboards`
 
 * `marketpulse.pbix`
-  Dashboard en Power BI con visualizaciones de negocio.
+  Dashboard en Power BI.
 
 ---
 
@@ -101,16 +111,6 @@ Espacio para análisis exploratorio en Jupyter (EDA más visual y narrativo).
 
 * `charter.md`
   Definición del proyecto, objetivos y alcance.
-
----
-
-## 📄 Archivos Raíz
-
-* `README.md`
-  Descripción general del proyecto (para reclutadores)
-
-* `requirements.txt`
-  Dependencias del proyecto
 
 ---
 
@@ -123,18 +123,24 @@ raw_market_data.csv
         ↓
 data_cleaning.py
         ↓
-processed data
+clean_market_data.csv
         ↓
-eda.py / notebooks
+weather_api.py
         ↓
-Power BI dashboard
+weather_data.csv
+        ↓
+feature_engineering.py
+        ↓
+final_dataset.csv
+        ↓
+EDA / Power BI
 ```
 
 ---
 
 ## 🧠 Notas
 
-* Mantener separación clara entre `raw` y `processed`
-* No modificar datos en `raw`
-* Todo procesamiento debe ocurrir en `/src/processing`
-* Este documento debe actualizarse si cambia la estructura
+* No modificar datos en `/raw`
+* Todo procesamiento ocurre en `/src/processing`
+* Pipeline diseñado para ser reproducible
+* Evitar hardcoding de fechas (data-driven pipeline)

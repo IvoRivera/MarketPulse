@@ -2,24 +2,25 @@
 
 ## 1. Visión del Proyecto
 
-Construir un **pipeline de datos end-to-end** que permita a una panadería analizar su rendimiento histórico y entender los factores que impactan sus ventas, integrando datos internos con fuentes externas.
+Construir un **pipeline de datos end-to-end profesional** que simule un entorno real de ingeniería de datos, permitiendo a una panadería analizar su rendimiento histórico mediante la integración de datos internos y fuentes externas.
 
-El objetivo es simular un caso real donde el negocio pasa de decisiones intuitivas a decisiones basadas en datos.
+El proyecto evoluciona desde un flujo básico de datos hacia una **arquitectura moderna**, incluyendo orquestación, modelado y despliegue en la nube.
 
 ---
 
 ## 2. Problema de Negocio
 
-Las pequeñas empresas de retail no cuentan con sistemas robustos de datos, lo que genera:
+Las pequeñas empresas de retail enfrentan:
 
-* Datos inconsistentes (errores de registro, outliers)
-* Falta de visibilidad sobre tendencias de ventas
-* Decisiones basadas en intuición (ej: precios, stock, promociones)
+* Datos inconsistentes y dispersos
+* Falta de integración entre fuentes internas y externas
+* Ausencia de sistemas analíticos estructurados
+* Decisiones basadas en intuición
 
 Esto impide responder preguntas clave como:
 
-* ¿Cuándo vendo más y por qué?
-* ¿Qué factores externos afectan mis ventas?
+* ¿Qué factores impactan las ventas?
+* ¿Cómo influye el clima en el rendimiento?
 * ¿Qué productos generan mayor valor?
 
 ---
@@ -28,54 +29,69 @@ Esto impide responder preguntas clave como:
 
 ### 🧱 Ingeniería de Datos
 
-* Construir un pipeline en Python que:
+* Construir un pipeline ETL en Python que:
 
-  * Genere y procese datos históricos (10 años)
-  * Limpie y valide datos automáticamente
-  * Estructure datos en formato analítico
+  * Genere datos históricos
+  * Integre APIs externas
+  * Limpie y valide datos
+  * Modele datos en formato analítico (star schema)
 
-### 🔗 Integración de Datos
+---
 
-* Enriquecer el dataset con variables externas como:
+### ⚙️ Arquitectura y Backend
 
-  * Clima o feriados
-* Unificar datos en un modelo analítico
+* Estructurar el pipeline como sistema productivo:
 
-### 📊 Análisis
+  * Modularización (extract / transform / load)
+  * Configuración externa (config.yaml)
+  * Logging y manejo de errores
+* Contenerizar con Docker
+* Orquestar con Airflow (DAG)
 
-* Identificar:
+---
 
-  * Tendencias de ventas
-  * Estacionalidad
-  * Impacto de variables externas
+### ☁️ Cloud & Data Platform
 
-### 📈 Visualización
+* Almacenar datos en AWS S3 (raw, processed, curated)
+* Consultar datos con Athena
+* Aplicar SQL para validación y análisis
 
-* Desarrollar un dashboard en Power BI que permita:
+---
 
-  * Monitorear KPIs clave
-  * Explorar patrones de negocio
-  * Apoyar la toma de decisiones
+### 📊 Análisis y Visualización
+
+* Generar insights de negocio:
+
+  * tendencias
+  * estacionalidad
+  * impacto de variables externas
+* Construir dashboard en Power BI
 
 ---
 
 ## 4. Stack Tecnológico
 
-* **Python** → ETL (generación, limpieza, transformación)
-* **APIs externas** → enriquecimiento de datos
-* **AWS (S3)** → almacenamiento de datos
+* **Python** → ETL / procesamiento
+* **SQL** → validación y análisis
+* **Docker** → contenerización
+* **Airflow** → orquestación de pipelines
+* **AWS (S3 + Athena)** → almacenamiento y consulta
 * **Power BI** → visualización
-* **GitHub** → versionado y documentación
+* **GitHub** → versionado
 
 ---
 
 ## 5. Criterios de Éxito
 
-* Pipeline reproducible de datos (raw → processed)
-* Integración de al menos una fuente externa
-* Dataset limpio y validado
-* Dashboard funcional con insights claros
-* Proyecto documentado y entendible en GitHub
+* Pipeline ejecutable end-to-end
+* Integración de múltiples fuentes (ventas + clima)
+* Modelo dimensional implementado
+* Pipeline orquestado con Airflow
+* Contenerización con Docker
+* Datos disponibles en AWS
+* Queries SQL funcionando sobre datos reales
+* Dashboard con insights claros
+* Documentación completa
 
 ---
 
@@ -83,7 +99,23 @@ Esto impide responder preguntas clave como:
 
 Un proyecto de portafolio que demuestre:
 
-* Manejo de datos end-to-end
-* Capacidad de integrar múltiples fuentes
-* Generación de insights de negocio
-* Uso de herramientas reales del stack de datos
+* Construcción de pipelines de datos reales
+* Integración de APIs y múltiples fuentes
+* Modelado de datos (star schema)
+* Uso de herramientas modernas del stack de datos
+* Capacidad de trabajar con cloud, orquestación y backend
+
+---
+
+## 7. Enfoque del Proyecto
+
+Este proyecto no busca ser un simple ejercicio analítico, sino:
+
+> Simular el trabajo de un Data Engineer en un entorno real
+
+Priorizando:
+
+* reproducibilidad
+* escalabilidad
+* claridad arquitectónica
+* alineación con el mercado laboral

@@ -5,7 +5,8 @@ from pathlib import Path
 # =========================
 # CONFIG
 # =========================
-OUTPUT_PATH = Path("data/raw/weather_data.csv")
+BASE_DIR = Path(__file__).resolve().parents[2]
+OUTPUT_PATH = BASE_DIR / "data/raw/weather_data.csv"
 
 # Coordenadas Santiago (puedes cambiarlas después)
 LAT = -33.45
@@ -75,7 +76,8 @@ def get_date_range_from_sales(path: Path):
     return str(start_date), str(end_date)
 
 def run_weather_pipeline():
-    sales_path = Path("data/raw/raw_market_data.csv")
+    BASE_DIR = Path(__file__).resolve().parents[2]
+    sales_path = BASE_DIR / "data/raw/raw_market_data.csv"
 
     start_date, end_date = get_date_range_from_sales(sales_path)
 

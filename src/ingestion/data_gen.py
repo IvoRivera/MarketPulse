@@ -9,8 +9,8 @@ from datetime import datetime
 # ========================= 
 
 # 1. Cofiguración temporal inicial y salida
-
-OUTPUT_PATH = Path("data/raw/raw_market_data.csv") 
+BASE_DIR = Path(__file__).resolve().parents[2]
+OUTPUT_PATH = BASE_DIR / "data/raw/raw_market_data.csv"
 START_DATE = "2016-01-01" 
 END_DATE = datetime.now().strftime("%Y-%m-%d") 
 DATE_RANGE = pd.date_range(start=START_DATE, end=END_DATE, freq='D')
@@ -18,11 +18,12 @@ DATE_RANGE = pd.date_range(start=START_DATE, end=END_DATE, freq='D')
 np.random.seed(42)
 
 
-def get_product_catalog():
+
 
 # ========================= 
 # CATÁLOGO DE PRODUCTOS
 # =========================
+def get_product_catalog():
     """ Definicion de un catalogo para generar un dataset de 10 años con 25+ productos y lógica estacional avanzada """
     
     # 2. Catálogo Extendido (25 productos en 5 categorías)
@@ -64,6 +65,7 @@ def get_product_catalog():
         {'id': 505, 'cat': 'Rotisería', 'name': 'Sopaipillas (bolsa)', 'base_price': 2500, 'daily_vol': 10, 'cost_f': 0.3}
     ]
 
+    return products
 # =========================
 # LÓGICA DE NEGOCIO
 # =========================

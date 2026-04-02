@@ -5,8 +5,10 @@ from pathlib import Path
 # =========================
 # CONFIGURACIÓN
 # =========================
-RAW_PATH = Path("data/raw/raw_market_data.csv")
-OUTPUT_PATH = Path("data/processed/clean_market_data.csv")
+
+BASE_DIR = Path(__file__).resolve().parents[2]
+RAW_PATH = BASE_DIR / "data/raw/raw_market_data.csv"
+OUTPUT_PATH = BASE_DIR / "data/processed/clean_market_data.csv"
 
 
 # =========================
@@ -72,10 +74,11 @@ def diagnostic_outliers(df: pd.DataFrame, year_sample: int = 2025):
     Diagnóstico simple de outliers por producto.
     """
     print("\n🔍 Diagnóstico de outliers...")
+    sample = df[df["year"] == year_sample]
     if sample.empty:
         print(f"No hay datos para el año {year_sample}")
         return
-    sample = df[df["year"] == year_sample]
+    
 
     for prod_id in sample["product_id"].unique():
         subset = sample[sample["product_id"] == prod_id]
