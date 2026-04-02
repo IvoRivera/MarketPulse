@@ -6,29 +6,42 @@
 marketpulse/
 │
 ├── data/
-│   ├── raw/
-│   │   ├── raw_market_data.csv
-│   │   └── weather_data.csv
-│   ├── processed/
-│   │   ├── clean_market_data.csv
-│   │   └── final_dataset.csv
+│ ├── raw/
+│ │ ├── raw_market_data.csv
+│ │ └── weather_data.csv
+│ ├── processed/
+│ │ ├── clean_market_data.csv
+│ │ ├── final_dataset.csv
+│ │ └── sql_outputs/
+│ │ ├── sales_by_day.csv
+│ │ ├── top_products.csv
+│ │ └── rolling_avg.csv
 │
 ├── src/
-│   ├── ingestion/
-│   │   ├── data_generator.py
-│   │   └── weather_api.py
-│   ├── processing/
-│   │   ├── data_cleaning.py
-│   │   └── feature_engineering.py
-│   ├── analysis/
-│   │   └── eda.py
+│ ├── ingestion/
+│ │ ├── data_generator.py
+│ │ └── weather_api.py
+│ ├── processing/
+│ │ ├── data_cleaning.py
+│ │ └── feature_engineering.py
+│ ├── analysis/
+│ │ ├── eda.py
+│ │ └── run_sql.py
+│ ├── sql/
+│ │ ├── sales_by_day.sql
+│ │ ├── top_products.sql
+│ │ └── rolling_avg.sql
+│
+├── tests/
+│ └── test_data_quality.py
 │
 ├── notebooks/
 ├── dashboards/
-│   └── marketpulse.pbix
+│ └── marketpulse.pbix
 │
 ├── docs/
-│   └── charter.md
+│ ├── charter.md
+│ └── structure.md
 │
 ├── README.md
 ├── requirements.txt
@@ -118,21 +131,25 @@ Espacio para análisis exploratorio más narrativo (EDA).
 
 ```
 data_generator.py
-        ↓
+↓
 raw_market_data.csv
-        ↓
+↓
 data_cleaning.py
-        ↓
+↓
 clean_market_data.csv
-        ↓
+↓
 weather_api.py
-        ↓
+↓
 weather_data.csv
-        ↓
+↓
 feature_engineering.py
-        ↓
+↓
 final_dataset.csv
-        ↓
+↓
+SQL (DuckDB)
+↓
+sql_outputs/
+↓
 EDA / Power BI
 ```
 
@@ -142,5 +159,6 @@ EDA / Power BI
 
 * No modificar datos en `/raw`
 * Todo procesamiento ocurre en `/src/processing`
-* Pipeline diseñado para ser reproducible
-* Evitar hardcoding de fechas (data-driven pipeline)
+* SQL se utiliza para validación y análisis paralelo
+* Outputs analíticos se almacenan en `/data/processed/sql_outputs`
+* Pipeline diseñado para ser reproducible y validable
