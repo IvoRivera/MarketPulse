@@ -11,9 +11,10 @@ QUERY_MAP = {
     "sales_by_day": BASE_DIR / "src/sql/sales_by_day.sql",
     "top_products": BASE_DIR / "src/sql/top_products.sql",
     "rolling_avg": BASE_DIR / "src/sql/rolling_avg.sql",
+    "product_ranking": BASE_DIR / "src/sql/product_ranking.sql",
 }
 
-QUERY_NAME = "rolling_avg"
+QUERY_NAME = "product_ranking" # Cambiar para ejecutar query deseada
 QUERY_PATH = QUERY_MAP[QUERY_NAME]
 
 

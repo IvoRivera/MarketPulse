@@ -1,0 +1,25 @@
+product_id,product_name,category,total_revenue,total_units,revenue_rank,category_rank
+101.0,Marraqueta,Panes,817744193.0,332498.0,1,1
+102.0,Hallulla,Panes,709407731.0,295707.0,2,2
+504.0,Torta Selva Negra,Rotisería,492154025.0,19301.0,3,1
+402.0,Capuchino,Cafetería,475387196.0,124013.0,4,1
+202.0,Alfajor Maicena,Pastelería,456842491.0,265160.0,5,1
+204.0,Donas,Pastelería,441053516.0,238500.0,6,2
+201.0,Berlín Crema,Pastelería,426360124.0,211164.0,7,3
+301.0,Pino Horno,Empanadas,398065717.0,102165.0,8,1
+401.0,Café Espresso,Cafetería,367239032.0,145853.0,9,2
+104.0,Pan de Molde,Panes,352612740.0,91804.0,10,3
+203.0,Kuchen de Manzana,Pastelería,351335048.0,79998.0,11,4
+404.0,Bebida 500ml,Cafetería,348484142.0,166519.0,12,3
+205.0,Pastel de Milhojas,Pastelería,343131828.0,105906.0,13,5
+103.0,Pan Integral,Panes,329898741.0,110954.0,14,4
+302.0,Queso Horno,Empanadas,278155223.0,81383.0,15,2
+403.0,Jugo Natural,Cafetería,271459527.0,62297.0,16,4
+505.0,Sopaipillas (bolsa),Rotisería,256812989.0,55345.0,17,2
+503.0,Galletas Mantequilla,Rotisería,220843650.0,44081.0,18,3
+304.0,Queso Frita,Empanadas,203809209.0,73166.0,19,3
+303.0,Pino Frita,Empanadas,187025856.0,61340.0,20,4
+305.0,Napolitana,Empanadas,176336367.0,48854.0,21,5
+502.0,Mermelada Casera,Rotisería,163330147.0,29666.0,22,4
+105.0,Baguette,Panes,141785243.0,74592.0,23,5
+405.0,Té / Infusión,Cafetería,74932973.0,41506.0,24,5
