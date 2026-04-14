@@ -1,0 +1,25 @@
+product_id,product_name,category
+101,Marraqueta,Panes
+505,Sopaipillas (bolsa),Rotisería
+504,Torta Selva Negra,Rotisería
+503,Galletas Mantequilla,Rotisería
+502,Mermelada Casera,Rotisería
+405,Té / Infusión,Cafetería
+404,Bebida 500ml,Cafetería
+402,Capuchino,Cafetería
+401,Café Espresso,Cafetería
+305,Napolitana,Empanadas
+304,Queso Frita,Empanadas
+303,Pino Frita,Empanadas
+403,Jugo Natural,Cafetería
+301,Pino Horno,Empanadas
+302,Queso Horno,Empanadas
+103,Pan Integral,Panes
+104,Pan de Molde,Panes
+105,Baguette,Panes
+201,Berlín Crema,Pastelería
+102,Hallulla,Panes
+203,Kuchen de Manzana,Pastelería
+204,Donas,Pastelería
+205,Pastel de Milhojas,Pastelería
+202,Alfajor Maicena,Pastelería

@@ -244,7 +244,7 @@ Documentación del proyecto.
 ## 🔄 Flujo del Pipeline
 
 ```
-data_generator.py
+data_gen.py
 ↓
 raw_market_data.csv
 ↓

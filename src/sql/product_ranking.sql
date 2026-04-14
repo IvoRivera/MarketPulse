@@ -1,19 +1,20 @@
-SELECT
-    product_id,
-    product_name,
-    category,
+SELECT 
+  p.product_id,
+  p.product_name,
+  p.category,
+  SUM(f.revenue) AS total_revenue,
+  SUM(f.units_sold) AS total_units,
 
-    SUM(revenue) AS total_revenue,
-    SUM(units_sold) AS total_units,
+  RANK() OVER (ORDER BY SUM(f.revenue) DESC) AS revenue_rank,
 
-    RANK() OVER (ORDER BY SUM(revenue) DESC) AS revenue_rank,
+  RANK() OVER (
+    PARTITION BY p.category 
+    ORDER BY SUM(f.revenue) DESC
+  ) AS category_rank
 
-    RANK() OVER (
-        PARTITION BY category
-        ORDER BY SUM(revenue) DESC
-    ) AS category_rank
+FROM read_csv_auto('data/processed/data_model/fact_sales.csv') f
+JOIN read_csv_auto('data/processed/data_model/dim_product.csv') p
+  ON f.product_id = p.product_id
 
-FROM read_csv_auto('data/processed/final_dataset.csv')
-
-GROUP BY product_id, product_name, category
+GROUP BY p.product_id, p.product_name, p.category
 ORDER BY revenue_rank;
