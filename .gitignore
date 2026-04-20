@@ -1,45 +1,16 @@
-# =========================
-# Python
-# =========================
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# =========================
-# Virtual environments
-# =========================
+# Entornos
 venv/
 .env/
 
-# =========================
-# Pytest
-# =========================
-.pytest_cache/
+# Python
+__pycache__/
+*.pyc
 
-# =========================
 # IDEs
-# =========================
 .vscode/
-.idea/
-
-# =========================
-# Obsidian
-# =========================
 .obsidian/
 
-# =========================
-# OS files
-# =========================
-.DS_Store
-Thumbs.db
-
-# =========================
-# Logs
-# =========================
-*.log
-
-# =========================
-# Files
-# =========================
-dashboards/MarketPulse_PBI.pbix
+# Datos
+data/raw/
+data/processed/sql_outputs/
+data/processed/clean_market_data.csv
