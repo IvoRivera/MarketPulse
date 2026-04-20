@@ -14,3 +14,6 @@ __pycache__/
 data/raw/
 data/processed/sql_outputs/
 data/processed/clean_market_data.csv
+
+# Power BI
+dashboards/MarketPulse_PBI.pbix

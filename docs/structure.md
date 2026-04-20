@@ -15,10 +15,15 @@ marketpulse/
 │ │   ├── rolling_avg.csv
 │ │   └── product_ranking.csv
 │ ├── raw/
-│ │ ├── raw_market_data.csv
-│ │ └── weather_data.csv
+│   ├── raw_market_data.csv
+│   └── weather_data.csv
 │
 ├── src/
+| ├── analysis/
+│ │ ├── eda.py
+│ │ ├── run_sql.py
+│ │ └── validate_sql_vs_python.py
+│ │
 │ ├── ingestion/
 │ │ ├── data_generator.py
 │ │ └── weather_api.py
@@ -27,16 +32,11 @@ marketpulse/
 │ │ ├── data_cleaning.py
 │ │ └── feature_engineering.py
 │ │
-| ├── analysis/
-│ │   ├── eda.py
-│ │   ├── run_sql.py
-│ │   └── validate_sql_vs_python.py
-│ │
 │ ├── sql/
-│ │ ├── sales_by_day.sql
-│ │ ├── top_products.sql
-│ │ ├── rolling_avg.sql
-│ │ └── product_ranking.sql
+│   ├── sales_by_day.sql
+│   ├── top_products.sql
+│   ├── rolling_avg.sql
+│   └── product_ranking.sql
 │
 ├── tests/
 │ └── test_data_quality.py
@@ -47,7 +47,9 @@ marketpulse/
 │
 ├── docs/
 │ ├── charter.md
-│ └── structure.md
+│ ├── structure.md
+│ └── screenshots/
+│      └── overview.png
 │
 ├── README.md
 ├── requirements.txt
@@ -213,8 +215,13 @@ Espacio para análisis exploratorio más detallado y narrativo en Jupyter.
 
 Visualización de datos.
 
-* **MarketPulse_PBI.pbix**  
-  Dashboard en Power BI con métricas de negocio e insights.
+* **marketpulse_dashboard.pbix**  
+  Dashboard final del proyecto que incluye:
+  - KPIs principales (revenue, unidades, ticket promedio)
+  - Tendencia temporal de ventas
+  - Top productos
+  - Impacto del clima
+  - Comparación semana vs fin de semana
 
 ---
 
@@ -224,6 +231,12 @@ Documentación del proyecto.
 
 * **charter.md** → Definición del proyecto, objetivos, alcance y stack tecnológico  
 * **structure.md** → Descripción de la arquitectura y organización del repositorio  
+
+#### `/screenshots`
+Capturas del dashboard para visualización rápida en el README:
+
+* **dashboard_overview.png** → Vista general con KPIs  
+
 
 ---
 
@@ -244,7 +257,7 @@ Documentación del proyecto.
 ## 🔄 Flujo del Pipeline
 
 ```
-data_gen.py
+data_generator.py
 ↓
 raw_market_data.csv
 ↓
@@ -273,8 +286,10 @@ EDA / Power BI
 
 ## 🧠 Notas
 
-* No modificar datos en `/raw`  
+* No se modifican datos en `/raw`  
 * Todo procesamiento ocurre en `/src/processing`  
 * SQL se utiliza como capa analítica y de validación  
 * Outputs SQL se almacenan en `/data/processed/sql_outputs`  
-* Pipeline diseñado para ser reproducible, validable y escalable  
+* Archivos pesados (como `.pbix`) se gestionan vía `.gitignore`  
+* Screenshots se incluyen para facilitar revisión sin herramientas externas  
+* Pipeline diseñado para ser reproducible, validable y cercano a producción  
