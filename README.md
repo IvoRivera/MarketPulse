@@ -78,7 +78,7 @@ BI Layer (Power BI)
 
 ## 🧪 Ingeniería de Datos y Calidad
 
-El foco del proyecto está en la **calidad y confiabilidad del dato**:
+El pipeline puede ejecutarse end-to-end de forma reproducible usando `main.py`.
 
 ### 🔹 Generación de datos con anomalías
 - Inyección controlada de errores:
@@ -180,6 +180,9 @@ Incluye:
 ### Vista general
 ![Dashboard Overview](docs/screenshots/dashboard_overview.png)
 📁 `/dashboards/marketpulse_dashboard.pbix`
+
+⚠️ Nota: El archivo `.pbix` no se incluye en el repositorio para mantenerlo liviano y versionable.  
+Las visualizaciones se presentan mediante capturas.
 
 ---
 
