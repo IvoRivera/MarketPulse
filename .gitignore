@@ -5,15 +5,15 @@ venv/
 # Python
 __pycache__/
 *.pyc
+.pytest_cache/
 
 # IDEs
 .vscode/
 .obsidian/
 
 # Datos
-data/raw/
-data/processed/sql_outputs/
-data/processed/clean_market_data.csv
+data/
+!data/sample_data.csv
 
 # Power BI
 dashboards/MarketPulse_PBI.pbix
