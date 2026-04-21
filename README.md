@@ -26,20 +26,20 @@ Construir un pipeline reproducible y validable que permita:
 
 ## 🏗️ Arquitectura del sistema
 
-El pipeline sigue una arquitectura por capas:
+El pipeline sigue una arquitectura por capas, orquestada desde un entrypoint central:
 
-Data Generation (Source)
-↓
-Raw Layer (datos con ruido)
-↓
-Cleaning Layer (normalización y outliers)
-↓
-Feature Engineering (variables derivadas + clima)
-↓
-Analytics Layer (SQL - DuckDB)
-↓
-Validation Layer (pytest + SQL vs pandas)
-↓
+Data Generation (Source)  
+↓  
+Raw Layer (datos con ruido)  
+↓  
+Cleaning Layer (normalización y outliers)  
+↓  
+Feature Engineering (variables derivadas + clima)  
+↓  
+Analytics Layer (SQL - DuckDB)  
+↓  
+Validation Layer (pytest + SQL vs pandas)  
+↓  
 BI Layer (Power BI)
 
 
@@ -54,6 +54,27 @@ BI Layer (Power BI)
 - **Open-Meteo API** → integración de datos climáticos  
 
 ---
+
+## ⚙️ Instalación
+
+1. Clona el repositorio:
+  ```bash
+  git clone https://github.com/tuusuario/MarketPulse_Project.git
+  cd MarketPulse_Project
+
+2. Crea y activa un entorno virtual:
+  python -m venv venv
+  source venv/bin/activate   # Linux/Mac
+  venv\Scripts\activate      # Windows PowerShell
+
+3. Instala las dependencias:
+  pip install -r requirements.txt
+  
+4. Configura variables de entorno
+  cp .env.example .env
+
+5. Ejecuta el pipeline:
+  python src/main.py
 
 ## 🧪 Ingeniería de Datos y Calidad
 
@@ -154,12 +175,11 @@ Incluye:
 - Tendencia temporal  
 - Top productos  
 - Impacto del clima  
-- Comparación semana vs fin de semana
+- Comparación semana vs fin de semana  
 
 ### Vista general
-![Dashboard Overview](docs/img/dashboard_overview.png)
-
-📁 `/dashboards/MarketPulse_PBI.pbix`
+![Dashboard Overview](docs/screenshots/dashboard_overview.png)
+📁 `/dashboards/marketpulse_dashboard.pbix`
 
 ---
 
@@ -178,14 +198,16 @@ El sistema asegura consistencia en múltiples niveles:
 
 ## 🏗️ Estructura del proyecto
 
-/ingestion → generación y obtención de datos
-/processing → limpieza y transformación
-/analysis → SQL + validación
-/sql → queries analíticas
-/tests → calidad de datos
-/dashboards → visualización
+- `/src/ingestion` → generación de datos y consumo de APIs  
+- `/src/processing` → limpieza y feature engineering  
+- `/src/sql` → queries analíticas (DuckDB)  
+- `/src/main.py` → orquestador del pipeline  
+- `/tests` → validación de calidad y consistencia  
+- `/data/sample_data.csv` → dataset reducido para ejecución rápida  
+- `/notebooks` → análisis exploratorio (EDA)  
+- `/dashboards` → visualización en Power BI  
 
-📄 Ver detalle: `/docs/structure.md`
+📄 Ver detalle completo: `/docs/structure.md`
 
 ---
 
