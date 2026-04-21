@@ -28,6 +28,8 @@ Construir un pipeline reproducible y validable que permita:
 
 El pipeline sigue una arquitectura por capas, orquestada desde un entrypoint central:
 
+```bash
+
 Data Generation (Source)  
 ↓  
 Raw Layer (datos con ruido)  
@@ -42,6 +44,7 @@ Validation Layer (pytest + SQL vs pandas)
 ↓  
 BI Layer (Power BI)
 
+```
 
 ---
 
@@ -61,20 +64,29 @@ BI Layer (Power BI)
   ```bash
   git clone https://github.com/tuusuario/MarketPulse_Project.git
   cd MarketPulse_Project
+  ```
 
 2. Crea y activa un entorno virtual:
+  ```bash
   python -m venv venv
   source venv/bin/activate   # Linux/Mac
   venv\Scripts\activate      # Windows PowerShell
+  ```
 
 3. Instala las dependencias:
+  ```bash
   pip install -r requirements.txt
+  ```
   
 4. Configura variables de entorno
+  ```bash
   cp .env.example .env
+  ```
 
-5. Ejecuta el pipeline:
+5. Ejecuta el pipeline: 
+  ```bash
   python src/main.py
+  ```
 
 ## 🧪 Ingeniería de Datos y Calidad
 
